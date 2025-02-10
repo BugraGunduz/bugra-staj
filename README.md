@@ -1,27 +1,42 @@
 Moblnformation Programı
+1)PROGRAMIN TEMEL AMACI
+Programın tasarladığım kısmınn temel amacı ağa bağlı olan 14 adet el terminalinin uzaktan oturumunu sonlandırmak.
+2)TASARIM SÜRECİNDE İZLEDİĞİM YOL HARİTASI
+ilk olarak basic toolar ile basit bir form tasarladım ihtiyacım olan 14 adet buttonu koydum
+ve labeları ekleyip buttonları şekilendırdım ve form tasarımı ihtiyaçlarımı karşılayacak hale getirdim
+3)RDP OTURUMUNU NASIL SONLANDIRACAĞIM ?
+RDP oturumunu uzak masaüstü bağlantılarını yöneterek nasıl sonlandıracağımı araştırmaya başladım ve bir kaç yöntem buldum
+ilk bulduğum yöntem psexec metoduydu bu metodun amacı:
+3.1)PSEXEC NEDİR?
+Psexec sizle aynı ağa bağlı olan kullanıcı oturumlarını listeler ve bunlar üzerinde gerekli yetkiler ile kontol sağlamanıza yarar
+3.2)PSEXEC Yİ NASIL KULLANDIM
+ağdaki oturumları listeledikten sonra cmd üzerinden seçilen ID ye göre oturumu sonlandırıyordu fakat bu yöntemi manuel olarak çalışıyordu buda bana sorun yaratı ben tam otomatik bir sistem istiyordum program ise listelerken kullanılan ID yi almak için farklı bir komut logof vermek için farklı bir komut ve en son olarak benden oturum kapatma aşamasında bir admin şifresi istiyordu bu yüzden psexec kullanmaktan vazgeçtim
+4)QWİNSTA VE RWİNSTA KOMUTU
+psexec metodu işime yaramayınca direk komut üzerinden herşeyi otomatik bir yönteme bağlamayı araştırmaya başladım. qwinsta ve rwinsta komutlarını keşfetim bu iki komut ile psexec ile hedeflediğim herşeyi kodlar ile devam ederek yapabilirdim
+qwinsta ağda kayıtlı kullanıcıları listeler ve ID leri verir rwinsta ise gösterilen ID yi seçer ve oturumu kapatır temelinde işime yarayan komutları bir metin dosyasında denedim ve işime yaradı şimdi bu kodu otomatik hale getirmem gerekiyordu bu şekilde manuel olan tüm işlemleri otomatik hale getirebilecektim şu şekilde yaptım tğm el terminalerine bir metin belgesi .bat dosyası açtım ve kullanıcı adlarına bir değişken atadım ve bu kullanıcıların seçilmesini sağladım seçildikten sonra logof komutu ile oturumu kapatım
+formda eklemiş olduğum tüm buttonlara .bat dosyalarını atadım ve basıldığı zaman çalıştırmasını istedim ve çalıştırdı güvenlik sebebiyle domainuserı ve admin şifresini şifrelemek istedim ve AES şifreleme yöntemi ile 
+domain userı ve admin şifresini base64 formatında şifreledim ve bir json dosyasında sakladım fakat ne yaparsam yapayım benden oturum kapatma evresinde admin şifresini istiyordu sonradan fark ettimki bu kullandığım yöntemde admin şifresini şifrelemenin bir yolu yoktu
+5)FORM DETAYLI TASARIM
+Eklediğim buttonların ve labeların sizeını orantılayıp buttonları transparan yaptım ardından arka plan rengini transparan yaptım ve renk düzenini sağladım yazı büyüklüklerini ve fontlarını ayarlayıp tasarımı bitirdim tasarım için ek kütüphaneler kullandım 
+using 2D drawing
+using 3D drawing 
+ve benzeri tasarım kütüphaneleri
+6)ADMİN ŞİFRESİNİN ÇÖZÜMÜ VE PSEXEC YE GERİ DÖNÜŞ 
+Önceden psexec nin kendi komutlarını kullanarak yapmaya çalıştığım sistemi .bat ile yapmayı denedim ve başardım daha önceden yapmış olduğum her el termimali için açmış olduğum .bat dosyalarını psexec ye uyarladım ve onlar üzerinden runas komutu logof komutlarını otomatikleştirdim önceden şifrelemiş olduğum admin şifresini değişken olarak aldım ve değişkenede json dosyasına tanımlamış olduğum admin şifresini atadım ve program çalışır hale geldi.
+7)PROGRAM KULLANICI DENETLEMESİ
+Programı edinen tüm bilgisayarlarda çalışmaması için bir bir yöntem geliştirdim bir label ekledim ve görünmez yaptım label programın çalıştığı bilgisayarın kullanıcı ismini alacak ve gösterecek ardındna bir liste oluşturdum listede programı çalıştırabilecek bilgisayar isimlerini ekledim eğer listede isim varsa program sorunsuz çalışacak ama listede ismi yoksa buttona basıldığı zaman yetkiniz yok diye bir messagebox ta hata verecek bu sayede bir filtreleme yöntemi eklemiş oldum
+7)PROGRAMIN ÇALIŞMA ÖZETİ
+program çalıştırılır ve buttona basılır
+buttona basıldığı anda ilk olarak görünmez labelda yazan isimle listedeki isim aynımı kontrol eder
+eğer aynı ise çalışır değil ise yetkiniz yoktur
+ardından json dosyasındaki değişkenlerdeki veriyi alır
+.bat dosyasını çalıştırır
+json dosyasındaki veriyi aktarır yetki varsa ve doğru ise 
+psexec çalışır ve ilk başta aktif kullanıcıları listeler(kullanıcı göremez)
+eğer listede seçili kullanıcı varsa oturumunu sonlandırır yoksa kullanıcı bulunamadı hatası cmd ekranı üzerinden gözükür oturum kapatıldıktan sonra görünmez cmd ekranı kendini kapatır 
+ve formda bir messagebox çıkar oturum başarı ile sonlandırıldı diye
 
-Programın benim tasarladığım kısmının temel amacı ağa bağlı olan 14 adet el terminalinin uzaktan otumunu sonlandırmak programı tasarlarken
-izlediğim yol haritası ve denediğim çalışmalar sırası ile şu şekilde ilk olarak basic toolar ile basit bir form tasarladım ihitiyacım olan 
-14 adet buttonu koydum ve label ları ekleyip buttonları şekilendirdim form tasarımı ihtiyaçlarımı karşılayacak hale geldikten sonra RDP oturumunu
-nasıl sonlandıracağımı araştırmaya başladım ve bir kaç farklı yöntem buldum bunlardan ilk denediğim şey psexec metoduydu bu metodun amacı
-ağdaki kişileri listeliyor ardından cmd den seçilen ID ye göre oturumu sonlandırıyordu bu yöntem manuel olarak çalışıyordu fakat bir problem vardı 
-bu yöntem sadece manuel olarak çalışıyordu bir otomasyona bağlayamıyordum önce domainuserı sonra şifre ardından açılan açılan cmd ekranında oturumu
-seçip /logof komutu ile kendimiz kapatıyorduk programı otomatik bir hale alamamıştım. ardından harici bir metod yerine cmd temeli qwinsta ve rwinsta
-komutlarını kullanmaya karar verdim bu komutlarn işlevleri şu şekildedir qwinsta ağda aktif olan oturumları listeler ve ID lerini verir rwinsta ise
-seçili ID yi seçer ve ve oturumu kapatır temelinde işime yarayan komutlardı bir metin dosyasında denediğim vakit işe yaradı şimdi bu kodu otomatik 
-hale getirmem gerekiyordu ve şu şekilde yaptım tüm el terminaleri yani tüm kullanıcılar için bir bat dosyası oluşturdum kullanıcı adlarını bir değişkene atadım
-ve onları seçmesini sağladım ardından seçtikten sonra direk oturumu kapatması için log of komutunu ekledim ama benden yetki için admin şifresi istiyordu ama kodun çalışma
-prensibinde her türlü açılan cmd ekranında bende kapatmadan önce admin şifresi istiyordu bende admin kullanıcı adını domain userı bir değişkene atadım ve kodun içine attım çalışır hale gedli herşey otomatikti
-sadece oturumu kapatmadan önce admin şifresi istiyordu güvenlik açısından şifrelemiş olduğum DomainUserı AES şifreleme yöntemi ile base64 formatında şifreleyip
-programa yerleştridim ardından çalışır hale geldi fakat güvenlik sebeplerinden dolayı ve admin şifresini programı kullanacak olan her kullanıcıya veremeyeceğimden dolayı admin şifresini şifrelemek için
-geri psexec metoduna döndüm qwinsta ve rwinsta metodunda yaptıklarımı psexec metoduna bir .bat dosyası üzerinden uyguladım ve psexec oturum sonlandırma işleminde şifre istemediği için
-admin şifresinide şifreledim ve program çalışır hale geldi ardından form tasarımına geçtim tasarım kütüphaneleri kullanarak arka plan rengini ayarladım
-buttonların bulunduğu kısmı transparan yaptım button içlerini aynı şekilde şefaf bir görüntü için transparan yaptım text boyutlarını ve fontlarını ayarladım
-tasarımı tamamladıktan sonra uygulamayı edinen tüm bilgisayarların kullanmaması için bir filtre ekledim filtre şu şekilde çalışıyor bir label ekledim label bilgisayarın machine name ini alacak ardından yazdıracak bunun görünmez olmasını sağladım sadece kontrol amaçlı
-ardından eğer labelda benim listeye eklediğim bilgisayar isimleri varsa tüm buttonlar çalışır hale gelecek labelda liste dışı bir isim varsa buttona basıldığı zaman messahebox ile bir uyarı verecek
-yetkiniz yok diye program bu şekilde
-
-
+                                                                            
 Bahsetiğim metinde kullandığım kodlar
 .bat kodlar ve psexec metodu
 @echo off
@@ -48,7 +63,6 @@ for /f "tokens=3" %%A in ('%psexecPath% \\%server% qwinsta ^| findstr /R /C:"%us
 )
 
 echo İşlem tamamlandı.
-
 Şifreleme Yöntemi
 
   private string decryptData(string encryptedText)
