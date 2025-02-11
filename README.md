@@ -30,6 +30,8 @@ psexec metodu işime yaramayınca direk komut üzerinden herşeyi otomatik bir y
 qwinsta ağda kayıtlı kullanıcıları listeler ve ID leri verir rwinsta ise gösterilen ID yi seçer ve oturumu kapatır temelinde işime yarayan komutları bir metin dosyasında denedim ve işime yaradı şimdi bu kodu otomatik hale getirmem gerekiyordu bu şekilde manuel olan tüm işlemleri otomatik hale getirebilecektim şu şekilde yaptım tğm el terminalerine bir metin belgesi .bat dosyası açtım ve kullanıcı adlarına bir değişken atadım ve bu kullanıcıların seçilmesini sağladım seçildikten sonra logof komutu ile oturumu kapatım
 formda eklemiş olduğum tüm buttonlara .bat dosyalarını atadım ve basıldığı zaman çalıştırmasını istedim ve çalıştırdı güvenlik sebebiyle domainuserı ve admin şifresini şifrelemek istedim ve AES şifreleme yöntemi ile 
 domain userı ve admin şifresini base64 formatında şifreledim ve bir json dosyasında sakladım fakat ne yaparsam yapayım benden oturum kapatma evresinde admin şifresini istiyordu sonradan fark ettimki bu kullandığım yöntemde admin şifresini şifrelemenin bir yolu yoktu
+
+
 ##5)FORM DETAYLI TASARIM
 Eklediğim buttonların ve labeların sizeını orantılayıp buttonları transparan yaptım ardından arka plan rengini transparan yaptım ve renk düzenini sağladım yazı büyüklüklerini ve fontlarını ayarlayıp tasarımı bitirdim tasarım için ek kütüphaneler kullandım 
 using 2D drawing
