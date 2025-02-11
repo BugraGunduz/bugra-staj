@@ -47,7 +47,7 @@ ve benzeri tasarım kütüphaneleri
 Programı edinen tüm bilgisayarlarda çalışmaması için bir bir yöntem geliştirdim bir label ekledim ve görünmez yaptım label programın çalıştığı bilgisayarın kullanıcı ismini alacak ve gösterecek ardındna bir liste oluşturdum listede programı çalıştırabilecek bilgisayar isimlerini ekledim eğer listede isim varsa program sorunsuz çalışacak ama listede ismi yoksa buttona basıldığı zaman yetkiniz yok diye bir messagebox ta hata verecek bu sayede bir filtreleme yöntemi eklemiş oldum
 
 
-##7)PROGRAMIN ÇALIŞMA ÖZETİ
+##8)PROGRAMIN ÇALIŞMA ÖZETİ
 program çalıştırılır ve buttona basılır
 buttona basıldığı anda ilk olarak görünmez labelda yazan isimle listedeki isim aynımı kontrol eder
 eğer aynı ise çalışır değil ise yetkiniz yoktur
