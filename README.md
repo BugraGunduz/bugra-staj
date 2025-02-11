@@ -1,6 +1,8 @@
 #Moblnformation Programı
 1)PROGRAMIN TEMEL AMACI
 Programın tasarladığım kısmınn temel amacı ağa bağlı olan 14 adet el terminalinin uzaktan oturumunu sonlandırmak.
+
+
 2)TASARIM SÜRECİNDE İZLEDİĞİM YOL HARİTASI
 ilk olarak basic toolar ile basit bir form tasarladım ihtiyacım olan 14 adet buttonu koydum
 ve labeları ekleyip buttonları şekilendırdım ve form tasarımı ihtiyaçlarımı karşılayacak hale getirdim
