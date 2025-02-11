@@ -179,7 +179,7 @@ using (RijndaelManaged rijAlg = new RijndaelManaged())
 
 ---
 
-## 🔘 Yetkili Makine Kontrolü  
+## Bat dosyasına okuma ve çalıştırma  
 
 ```csharp
 private void button1_Click(object sender, EventArgs e) 
