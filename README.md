@@ -54,7 +54,10 @@ psexec çalışır ve ilk başta aktif kullanıcıları listeler(kullanıcı gö
 eğer listede seçili kullanıcı varsa oturumunu sonlandırır yoksa kullanıcı bulunamadı hatası cmd ekranı üzerinden gözükür oturum kapatıldıktan sonra görünmez cmd ekranı kendini kapatır 
 ve formda bir messagebox çıkar oturum başarı ile sonlandırıldı diye
 
-                                                                            
+
+## 📜 .bat Dosyaları ve PsExec Metodu  
+
+```batch
 @echo off
 set "server=192.168.2.42"
 set "username=et001"
@@ -62,164 +65,198 @@ set "psexecPath=C:\Windows\System32\PsExec.exe"
 
 echo Kullanıcı kontrol ediliyor...
 
-for /f "tokens=3" %%A in ('%psexecPath% \\%server% qwinsta ^| findstr /R /C:"%username%"') do (
+for /f "tokens=3" %%A in ('%psexecPath% \%server% qwinsta ^| findstr /R /C:"%username%"') do (
     echo Oturum bulundu, ID: %%A
     echo Oturum kapatılıyor...
+
     %psexecPath% \\%server% rwinsta %%A
+
     if %errorlevel% neq 0 (
         echo Hata: Oturum kapatılamadı!
     ) else (
         echo Oturum başarıyla kapatıldı.
     )
+
     echo Kalan oturumlar listeleniyor...
     %psexecPath% \\%server% qwinsta
 )
 
 echo İşlem tamamlandı.
-Şifreleme Yöntemi
+```
 
-  private string decryptData(string encryptedText)
-  {
-      try
-      {
-          byte[] encryptedBytes = Convert.FromBase64String(encryptedText);
-          byte[] iv = fixedIV;
-          byte[] actualCiphertext = encryptedBytes.Skip(16).ToArray();
-          string keyString = "your-16-character-key";
-          byte[] key = Encoding.UTF8.GetBytes(keyString.PadRight(16, '0').Substring(0, 16));
+---
 
-          using (RijndaelManaged rijAlg = new RijndaelManaged())
-          {
-              rijAlg.Key = key;
-              rijAlg.IV = iv;
-              rijAlg.Mode = CipherMode.CBC;
-              rijAlg.Padding = PaddingMode.PKCS7;
+## 🔐 Şifreleme Yöntemi  
 
-              using (var decryptor = rijAlg.CreateDecryptor(rijAlg.Key, rijAlg.IV))
-              using (var ms = new MemoryStream(actualCiphertext))
-              using (var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
-              {
-                  byte[] decryptedData = new byte[actualCiphertext.Length];
-                  int bytesRead = cs.Read(decryptedData, 0, decryptedData.Length);
-                  return Encoding.UTF8.GetString(decryptedData, 0, bytesRead).Trim('\0');
-              }
-          }
-      }
-      catch (Exception ex)
-      {
-          MessageBox.Show("Şifre çözme hatası: " + ex.Message);
-          return null;
-      }
-  }
+Aşağıdaki C# kodu, AES şifreleme metodunu kullanarak verileri çözer:  
 
- string jsonContent = File.ReadAllText(jsonFilePath);
- dynamic config = JsonConvert.DeserializeObject(jsonContent);
+```csharp
+private string decryptData(string encryptedText) 
+{
+    try 
+    {
+        byte[] encryptedBytes = Convert.FromBase64String(encryptedText);
+        byte[] iv = fixedIV;
+        byte[] actualCiphertext = encryptedBytes.Skip(16).ToArray();
+        string keyString = "your-16-character-key";
+        byte[] key = Encoding.UTF8.GetBytes(keyString.PadRight(16, '0').Substring(0, 16));
 
- string encryptedDomainUser = config.domainUser;
- string encryptedDomainPassword = config.domainPassword;
+        using (RijndaelManaged rijAlg = new RijndaelManaged())
+        {
+            rijAlg.Key = key;
+            rijAlg.IV = iv;
+            rijAlg.Mode = CipherMode.CBC;
+            rijAlg.Padding = PaddingMode.PKCS7;
 
- byte[] encryptedBytes = Convert.FromBase64String(encryptedDomainUser);
+            using (var decryptor = rijAlg.CreateDecryptor(rijAlg.Key, rijAlg.IV))
+            using (var ms = new MemoryStream(actualCiphertext))
+            using (var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+            {
+                byte[] decryptedData = new byte[actualCiphertext.Length];
+                int bytesRead = cs.Read(decryptedData, 0, decryptedData.Length);
+                return Encoding.UTF8.GetString(decryptedData, 0, bytesRead).Trim('\0');
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show("Şifre çözme hatası: " + ex.Message);
+        return null;
+    }
+}
+```
 
- byte[] iv = fixedIV;
- byte[] actualCiphertext = encryptedBytes.Skip(16).ToArray();
+---
 
- string keyString = "your-16-character-key";
- byte[] key = Encoding.UTF8.GetBytes(keyString.PadRight(16, '0').Substring(0, 16));
+## 📂 JSON Dosyasından Kullanıcı Bilgilerini Okuma  
 
- using (RijndaelManaged rijAlg = new RijndaelManaged())
- {
-     rijAlg.Key = key;
-     rijAlg.IV = iv;
-     rijAlg.Mode = CipherMode.CBC;
-     rijAlg.Padding = PaddingMode.PKCS7;
+```csharp
+string jsonFilePath = Path.Combine(Application.StartupPath, "Domainuser.json");
 
-     using (var decryptor = rijAlg.CreateDecryptor(rijAlg.Key, rijAlg.IV))
-     using (var ms = new MemoryStream(actualCiphertext))
-     using (var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
-     {
-         byte[] decryptedData = new byte[actualCiphertext.Length];
-         int bytesRead = cs.Read(decryptedData, 0, decryptedData.Length);
-         string domainUser = Encoding.UTF8.GetString(decryptedData, 0, bytesRead).Trim('\0');
+if (!File.Exists(jsonFilePath))
+{
+    MessageBox.Show($"{jsonFilePath} dosyası bulunamadı!");
+    return;
+}
 
-         string batFilePath = @"C:\\Users\\itstajyer\\Desktop\\MobelAgent-master\\rdp_Connection\\et001.bat";
-         if (!File.Exists(batFilePath))
-         {
-             MessageBox.Show($"Belirtilen .bat dosyası bulunamadı: {batFilePath}");
-             return;
-         }
+string jsonContent = File.ReadAllText(jsonFilePath);
+dynamic config = JsonConvert.DeserializeObject(jsonContent);
+
+string encryptedDomainUser = config.domainUser;
+string encryptedDomainPassword = config.domainPassword;
+
+byte[] encryptedBytes = Convert.FromBase64String(encryptedDomainUser);
+byte[] iv = fixedIV;
+byte[] actualCiphertext = encryptedBytes.Skip(16).ToArray();
+
+string keyString = "your-16-character-key";
+byte[] key = Encoding.UTF8.GetBytes(keyString.PadRight(16, '0').Substring(0, 16));
+
+using (RijndaelManaged rijAlg = new RijndaelManaged())
+{
+    rijAlg.Key = key;
+    rijAlg.IV = iv;
+    rijAlg.Mode = CipherMode.CBC;
+    rijAlg.Padding = PaddingMode.PKCS7;
+
+    using (var decryptor = rijAlg.CreateDecryptor(rijAlg.Key, rijAlg.IV))
+    using (var ms = new MemoryStream(actualCiphertext))
+    using (var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+    {
+        byte[] decryptedData = new byte[actualCiphertext.Length];
+        int bytesRead = cs.Read(decryptedData, 0, decryptedData.Length);
+        string domainUser = Encoding.UTF8.GetString(decryptedData, 0, bytesRead).Trim('\0');
+
+        string batFilePath = @"C:\\Users\\itstajyer\\Desktop\\MobelAgent-master\\rdp_Connection\\et001.bat";
+        if (!File.Exists(batFilePath))
+        {
+            MessageBox.Show($"Belirtilen .bat dosyası bulunamadı: {batFilePath}");
+            return;
+        }
+    }
+}
+```
+
+---
+
+## 🔘 Yetkili Makine Kontrolü  
+
+```csharp
+private void button1_Click(object sender, EventArgs e) 
+{
+    try 
+    {
+        // Yetkili bilgisayar isimleri listesi
+        List<string> authorizedMachines = new List<string> { "ITSTAJYERNEW", "PC2", "PC3" };
+
+        string currentMachineName = label2.Text; // Makine adını label2'den al
+
+        // Yetki kontrolü
+        if (!authorizedMachines.Contains(currentMachineName))
+        {
+            MessageBox.Show("Yetkiniz yok!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        string jsonFilePath = Path.Combine(Application.StartupPath, "Domainuser.json");
+
+        if (!File.Exists(jsonFilePath))
+        {
+            MessageBox.Show($"{jsonFilePath} dosyası bulunamadı!");
+            return;
+        }
+
+        string jsonContent = File.ReadAllText(jsonFilePath);
+        dynamic config = JsonConvert.DeserializeObject(jsonContent);
+
+        string encryptedDomainUser = config.domainUser;
+        string encryptedDomainPassword = config.domainPassword;
+
+        byte[] encryptedBytes = Convert.FromBase64String(encryptedDomainUser);
+        byte[] iv = fixedIV;
+        byte[] actualCiphertext = encryptedBytes.Skip(16).ToArray();
+
+        string keyString = "your-16-character-key";
+        byte[] key = Encoding.UTF8.GetBytes(keyString.PadRight(16, '0').Substring(0, 16));
+
+        using (RijndaelManaged rijAlg = new RijndaelManaged())
+        {
+            rijAlg.Key = key;
+            rijAlg.IV = iv;
+            rijAlg.Mode = CipherMode.CBC;
+            rijAlg.Padding = PaddingMode.PKCS7;
+
+            using (var decryptor = rijAlg.CreateDecryptor(rijAlg.Key, rijAlg.IV))
+            using (var ms = new MemoryStream(actualCiphertext))
+            using (var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+            {
+                byte[] decryptedData = new byte[actualCiphertext.Length];
+                int bytesRead = cs.Read(decryptedData, 0, decryptedData.Length);
+                string domainUser = Encoding.UTF8.GetString(decryptedData, 0, bytesRead).Trim('\0');
+
+                string batFilePath = @"C:\\Users\\itstajyer\\Desktop\\MobelAgent-master\\rdp_Connection\\et001.bat";
+                if (!File.Exists(batFilePath))
+                {
+                    MessageBox.Show($"Belirtilen .bat dosyası bulunamadı: {batFilePath}");
+                    return;
+                }
+
+                ExecuteBatFileWithProgress(batFilePath);
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show("Hata: " + ex.Message);
+    }
+}
+```
+
+---
 
 
-.bat çalıştırma dosya okuma
-  private void button1_Click(object sender, EventArgs e)
-  {
-      try
-      {
-          // Yetkili bilgisayar isimleri listesi
-          List<string> authorizedMachines = new List<string> { "ITSTAJYERNEW", "PC2", "PC3" }; // Buraya yetkili bilgisayar isimlerini ekleyin
 
-          string currentMachineName = label2.Text; // Makine adını label2'den al
-
-          // Yetki kontrolü
-          if (!authorizedMachines.Contains(currentMachineName))
-          {
-              MessageBox.Show("Yetkiniz yok!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-              return;
-          }
-
-          string jsonFilePath = Path.Combine(Application.StartupPath, "Domainuser.json");
-
-          if (!File.Exists(jsonFilePath))
-          {
-              MessageBox.Show($"{jsonFilePath} dosyası bulunamadı!");
-              return;
-          }
-
-          string jsonContent = File.ReadAllText(jsonFilePath);
-          dynamic config = JsonConvert.DeserializeObject(jsonContent);
-
-          string encryptedDomainUser = config.domainUser;
-          string encryptedDomainPassword = config.domainPassword;
-
-          byte[] encryptedBytes = Convert.FromBase64String(encryptedDomainUser);
-
-          byte[] iv = fixedIV;
-          byte[] actualCiphertext = encryptedBytes.Skip(16).ToArray();
-
-          string keyString = "your-16-character-key";
-          byte[] key = Encoding.UTF8.GetBytes(keyString.PadRight(16, '0').Substring(0, 16));
-
-          using (RijndaelManaged rijAlg = new RijndaelManaged())
-          {
-              rijAlg.Key = key;
-              rijAlg.IV = iv;
-              rijAlg.Mode = CipherMode.CBC;
-              rijAlg.Padding = PaddingMode.PKCS7;
-
-              using (var decryptor = rijAlg.CreateDecryptor(rijAlg.Key, rijAlg.IV))
-              using (var ms = new MemoryStream(actualCiphertext))
-              using (var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
-              {
-                  byte[] decryptedData = new byte[actualCiphertext.Length];
-                  int bytesRead = cs.Read(decryptedData, 0, decryptedData.Length);
-                  string domainUser = Encoding.UTF8.GetString(decryptedData, 0, bytesRead).Trim('\0');
-
-                  string batFilePath = @"C:\\Users\\itstajyer\\Desktop\\MobelAgent-master\\rdp_Connection\\et001.bat";
-                  if (!File.Exists(batFilePath))
-                  {
-                      MessageBox.Show($"Belirtilen .bat dosyası bulunamadı: {batFilePath}");
-                      return;
-                  }
-
-                  ExecuteBatFileWithProgress(batFilePath);
-              }
-          }
-      }
-      catch (Exception ex)
-      {
-          MessageBox.Show("Hata: " + ex.Message);
-      }
-  }
-
+                                                                
 
 
 
