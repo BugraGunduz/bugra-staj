@@ -56,6 +56,8 @@ ve formda bir messagebox çıkar oturum başarı ile sonlandırıldı diye
 
                                                                             
 Bahsetiğim metinde kullandığım kodlar
+
+
 .bat kodlar ve psexec metodu
 @echo off
 set "server=192.168.2.42"
