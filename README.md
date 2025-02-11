@@ -17,8 +17,12 @@ ilk bulduğum yöntem psexec metoduydu bu metodun amacı:
 
 3.1)PSEXEC NEDİR?
 Psexec sizle aynı ağa bağlı olan kullanıcı oturumlarını listeler ve bunlar üzerinde gerekli yetkiler ile kontol sağlamanıza yarar
+
+
 3.2)PSEXEC Yİ NASIL KULLANDIM
 ağdaki oturumları listeledikten sonra cmd üzerinden seçilen ID ye göre oturumu sonlandırıyordu fakat bu yöntemi manuel olarak çalışıyordu buda bana sorun yaratı ben tam otomatik bir sistem istiyordum program ise listelerken kullanılan ID yi almak için farklı bir komut logof vermek için farklı bir komut ve en son olarak benden oturum kapatma aşamasında bir admin şifresi istiyordu bu yüzden psexec kullanmaktan vazgeçtim
+
+
 4)QWİNSTA VE RWİNSTA KOMUTU
 psexec metodu işime yaramayınca direk komut üzerinden herşeyi otomatik bir yönteme bağlamayı araştırmaya başladım. qwinsta ve rwinsta komutlarını keşfetim bu iki komut ile psexec ile hedeflediğim herşeyi kodlar ile devam ederek yapabilirdim
 qwinsta ağda kayıtlı kullanıcıları listeler ve ID leri verir rwinsta ise gösterilen ID yi seçer ve oturumu kapatır temelinde işime yarayan komutları bir metin dosyasında denedim ve işime yaradı şimdi bu kodu otomatik hale getirmem gerekiyordu bu şekilde manuel olan tüm işlemleri otomatik hale getirebilecektim şu şekilde yaptım tğm el terminalerine bir metin belgesi .bat dosyası açtım ve kullanıcı adlarına bir değişken atadım ve bu kullanıcıların seçilmesini sağladım seçildikten sonra logof komutu ile oturumu kapatım
@@ -29,10 +33,16 @@ Eklediğim buttonların ve labeların sizeını orantılayıp buttonları transp
 using 2D drawing
 using 3D drawing 
 ve benzeri tasarım kütüphaneleri
+
+
 6)ADMİN ŞİFRESİNİN ÇÖZÜMÜ VE PSEXEC YE GERİ DÖNÜŞ 
 Önceden psexec nin kendi komutlarını kullanarak yapmaya çalıştığım sistemi .bat ile yapmayı denedim ve başardım daha önceden yapmış olduğum her el termimali için açmış olduğum .bat dosyalarını psexec ye uyarladım ve onlar üzerinden runas komutu logof komutlarını otomatikleştirdim önceden şifrelemiş olduğum admin şifresini değişken olarak aldım ve değişkenede json dosyasına tanımlamış olduğum admin şifresini atadım ve program çalışır hale geldi.
+
+
 7)PROGRAM KULLANICI DENETLEMESİ
 Programı edinen tüm bilgisayarlarda çalışmaması için bir bir yöntem geliştirdim bir label ekledim ve görünmez yaptım label programın çalıştığı bilgisayarın kullanıcı ismini alacak ve gösterecek ardındna bir liste oluşturdum listede programı çalıştırabilecek bilgisayar isimlerini ekledim eğer listede isim varsa program sorunsuz çalışacak ama listede ismi yoksa buttona basıldığı zaman yetkiniz yok diye bir messagebox ta hata verecek bu sayede bir filtreleme yöntemi eklemiş oldum
+
+
 7)PROGRAMIN ÇALIŞMA ÖZETİ
 program çalıştırılır ve buttona basılır
 buttona basıldığı anda ilk olarak görünmez labelda yazan isimle listedeki isim aynımı kontrol eder
