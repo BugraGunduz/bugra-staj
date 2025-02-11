@@ -55,10 +55,6 @@ eğer listede seçili kullanıcı varsa oturumunu sonlandırır yoksa kullanıc�
 ve formda bir messagebox çıkar oturum başarı ile sonlandırıldı diye
 
                                                                             
-Bahsetiğim metinde kullandığım kodlar
-
-
-.bat kodlar ve psexec metodu
 @echo off
 set "server=192.168.2.42"
 set "username=et001"
@@ -69,15 +65,12 @@ echo Kullanıcı kontrol ediliyor...
 for /f "tokens=3" %%A in ('%psexecPath% \\%server% qwinsta ^| findstr /R /C:"%username%"') do (
     echo Oturum bulundu, ID: %%A
     echo Oturum kapatılıyor...
-
     %psexecPath% \\%server% rwinsta %%A
-
     if %errorlevel% neq 0 (
         echo Hata: Oturum kapatılamadı!
     ) else (
         echo Oturum başarıyla kapatıldı.
     )
-
     echo Kalan oturumlar listeleniyor...
     %psexecPath% \\%server% qwinsta
 )
