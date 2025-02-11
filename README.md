@@ -59,8 +59,8 @@ ve formda bir messagebox çıkar oturum başarı ile sonlandırıldı diye
 
 ```batch
 @echo off
-set "server=192.168.2.42"
-set "username=et001"
+set "server=111.111.1.11"
+set "username=kullanici"
 set "psexecPath=C:\Windows\System32\PsExec.exe"
 
 echo Kullanıcı kontrol ediliyor...
