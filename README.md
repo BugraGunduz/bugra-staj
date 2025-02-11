@@ -55,7 +55,7 @@ eğer listede seçili kullanıcı varsa oturumunu sonlandırır yoksa kullanıc�
 ve formda bir messagebox çıkar oturum başarı ile sonlandırıldı diye
 
 
-## 📜 .bat Dosyaları ve PsExec Metodu  
+##  .bat Dosyaları ve PsExec Metodu  
 
 ```batch
 @echo off
@@ -86,7 +86,7 @@ echo İşlem tamamlandı.
 
 ---
 
-## 🔐 Şifreleme Yöntemi  
+##  Şifreleme Yöntemi  
 
 Aşağıdaki C# kodu, AES şifreleme metodunu kullanarak verileri çözer:  
 
@@ -128,7 +128,7 @@ private string decryptData(string encryptedText)
 
 ---
 
-## 📂 JSON Dosyasından Kullanıcı Bilgilerini Okuma  
+##  JSON Dosyasından Kullanıcı Bilgilerini Okuma  
 
 ```csharp
 string jsonFilePath = Path.Combine(Application.StartupPath, "Domainuser.json");
