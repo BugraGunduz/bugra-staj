@@ -10,6 +10,8 @@ Programın tasarladığım kısmınn temel amacı ağa bağlı olan 14 adet el t
 
 ilk olarak basic toolar ile basit bir form tasarladım ihtiyacım olan 14 adet buttonu koydum
 ve labeları ekleyip buttonları şekilendırdım ve form tasarımı ihtiyaçlarımı karşılayacak hale getirdim
+
+
 ##3)RDP OTURUMUNU NASIL SONLANDIRACAĞIM ?
 RDP oturumunu uzak masaüstü bağlantılarını yöneterek nasıl sonlandıracağımı araştırmaya başladım ve bir kaç yöntem buldum
 ilk bulduğum yöntem psexec metoduydu bu metodun amacı:
