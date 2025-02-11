@@ -13,6 +13,8 @@ ve labeları ekleyip buttonları şekilendırdım ve form tasarımı ihtiyaçlar
 3)RDP OTURUMUNU NASIL SONLANDIRACAĞIM ?
 RDP oturumunu uzak masaüstü bağlantılarını yöneterek nasıl sonlandıracağımı araştırmaya başladım ve bir kaç yöntem buldum
 ilk bulduğum yöntem psexec metoduydu bu metodun amacı:
+
+
 3.1)PSEXEC NEDİR?
 Psexec sizle aynı ağa bağlı olan kullanıcı oturumlarını listeler ve bunlar üzerinde gerekli yetkiler ile kontol sağlamanıza yarar
 3.2)PSEXEC Yİ NASIL KULLANDIM
