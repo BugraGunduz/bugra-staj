@@ -1,4 +1,6 @@
 #Moblnformation Programı
+
+
 1)PROGRAMIN TEMEL AMACI
 Programın tasarladığım kısmınn temel amacı ağa bağlı olan 14 adet el terminalinin uzaktan oturumunu sonlandırmak.
 
