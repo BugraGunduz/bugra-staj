@@ -1,49 +1,49 @@
 #Moblnformation Programı
 
 
-1)PROGRAMIN TEMEL AMACI
+##1)PROGRAMIN TEMEL AMACI
 Programın tasarladığım kısmınn temel amacı ağa bağlı olan 14 adet el terminalinin uzaktan oturumunu sonlandırmak.
 
 
-2)TASARIM SÜRECİNDE İZLEDİĞİM YOL HARİTASI
+##2)TASARIM SÜRECİNDE İZLEDİĞİM YOL HARİTASI
 
 
 ilk olarak basic toolar ile basit bir form tasarladım ihtiyacım olan 14 adet buttonu koydum
 ve labeları ekleyip buttonları şekilendırdım ve form tasarımı ihtiyaçlarımı karşılayacak hale getirdim
-3)RDP OTURUMUNU NASIL SONLANDIRACAĞIM ?
+##3)RDP OTURUMUNU NASIL SONLANDIRACAĞIM ?
 RDP oturumunu uzak masaüstü bağlantılarını yöneterek nasıl sonlandıracağımı araştırmaya başladım ve bir kaç yöntem buldum
 ilk bulduğum yöntem psexec metoduydu bu metodun amacı:
 
 
-3.1)PSEXEC NEDİR?
+##3.1)PSEXEC NEDİR?
 Psexec sizle aynı ağa bağlı olan kullanıcı oturumlarını listeler ve bunlar üzerinde gerekli yetkiler ile kontol sağlamanıza yarar
 
 
-3.2)PSEXEC Yİ NASIL KULLANDIM
+##3.2)PSEXEC Yİ NASIL KULLANDIM
 ağdaki oturumları listeledikten sonra cmd üzerinden seçilen ID ye göre oturumu sonlandırıyordu fakat bu yöntemi manuel olarak çalışıyordu buda bana sorun yaratı ben tam otomatik bir sistem istiyordum program ise listelerken kullanılan ID yi almak için farklı bir komut logof vermek için farklı bir komut ve en son olarak benden oturum kapatma aşamasında bir admin şifresi istiyordu bu yüzden psexec kullanmaktan vazgeçtim
 
 
-4)QWİNSTA VE RWİNSTA KOMUTU
+##4)QWİNSTA VE RWİNSTA KOMUTU
 psexec metodu işime yaramayınca direk komut üzerinden herşeyi otomatik bir yönteme bağlamayı araştırmaya başladım. qwinsta ve rwinsta komutlarını keşfetim bu iki komut ile psexec ile hedeflediğim herşeyi kodlar ile devam ederek yapabilirdim
 qwinsta ağda kayıtlı kullanıcıları listeler ve ID leri verir rwinsta ise gösterilen ID yi seçer ve oturumu kapatır temelinde işime yarayan komutları bir metin dosyasında denedim ve işime yaradı şimdi bu kodu otomatik hale getirmem gerekiyordu bu şekilde manuel olan tüm işlemleri otomatik hale getirebilecektim şu şekilde yaptım tğm el terminalerine bir metin belgesi .bat dosyası açtım ve kullanıcı adlarına bir değişken atadım ve bu kullanıcıların seçilmesini sağladım seçildikten sonra logof komutu ile oturumu kapatım
 formda eklemiş olduğum tüm buttonlara .bat dosyalarını atadım ve basıldığı zaman çalıştırmasını istedim ve çalıştırdı güvenlik sebebiyle domainuserı ve admin şifresini şifrelemek istedim ve AES şifreleme yöntemi ile 
 domain userı ve admin şifresini base64 formatında şifreledim ve bir json dosyasında sakladım fakat ne yaparsam yapayım benden oturum kapatma evresinde admin şifresini istiyordu sonradan fark ettimki bu kullandığım yöntemde admin şifresini şifrelemenin bir yolu yoktu
-5)FORM DETAYLI TASARIM
+##5)FORM DETAYLI TASARIM
 Eklediğim buttonların ve labeların sizeını orantılayıp buttonları transparan yaptım ardından arka plan rengini transparan yaptım ve renk düzenini sağladım yazı büyüklüklerini ve fontlarını ayarlayıp tasarımı bitirdim tasarım için ek kütüphaneler kullandım 
 using 2D drawing
 using 3D drawing 
 ve benzeri tasarım kütüphaneleri
 
 
-6)ADMİN ŞİFRESİNİN ÇÖZÜMÜ VE PSEXEC YE GERİ DÖNÜŞ 
+##6)ADMİN ŞİFRESİNİN ÇÖZÜMÜ VE PSEXEC YE GERİ DÖNÜŞ 
 Önceden psexec nin kendi komutlarını kullanarak yapmaya çalıştığım sistemi .bat ile yapmayı denedim ve başardım daha önceden yapmış olduğum her el termimali için açmış olduğum .bat dosyalarını psexec ye uyarladım ve onlar üzerinden runas komutu logof komutlarını otomatikleştirdim önceden şifrelemiş olduğum admin şifresini değişken olarak aldım ve değişkenede json dosyasına tanımlamış olduğum admin şifresini atadım ve program çalışır hale geldi.
 
 
-7)PROGRAM KULLANICI DENETLEMESİ
+##7)PROGRAM KULLANICI DENETLEMESİ
 Programı edinen tüm bilgisayarlarda çalışmaması için bir bir yöntem geliştirdim bir label ekledim ve görünmez yaptım label programın çalıştığı bilgisayarın kullanıcı ismini alacak ve gösterecek ardındna bir liste oluşturdum listede programı çalıştırabilecek bilgisayar isimlerini ekledim eğer listede isim varsa program sorunsuz çalışacak ama listede ismi yoksa buttona basıldığı zaman yetkiniz yok diye bir messagebox ta hata verecek bu sayede bir filtreleme yöntemi eklemiş oldum
 
 
-7)PROGRAMIN ÇALIŞMA ÖZETİ
+##7)PROGRAMIN ÇALIŞMA ÖZETİ
 program çalıştırılır ve buttona basılır
 buttona basıldığı anda ilk olarak görünmez labelda yazan isimle listedeki isim aynımı kontrol eder
 eğer aynı ise çalışır değil ise yetkiniz yoktur
